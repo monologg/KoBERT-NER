@@ -122,8 +122,10 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-.dmypy.json
-dmypy.json
 
-# Pyre type checker
-.pyre/
+####################
+.vscode/
+.idea/
+model/
+
+.DS_Store
