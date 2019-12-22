@@ -8,9 +8,16 @@ from data_loader import load_examples
 def main(args):
     init_logger()
     tokenizer = load_tokenizer(args)
-    train_dataset = load_examples(args, tokenizer, mode="train")
+
+    train_dataset = None
     dev_dataset = None
-    test_dataset = load_examples(args, tokenizer, mode="test")
+    test_dataset = None
+
+    if args.do_train:
+        train_dataset = load_examples(args, tokenizer, mode="train")
+    if args.do_eval:
+        test_dataset = load_examples(args, tokenizer, mode="test")
+
     trainer = Trainer(args, train_dataset, dev_dataset, test_dataset)
 
     if args.do_train:
@@ -27,10 +34,10 @@ if __name__ == '__main__':
     parser.add_argument("--task", default="naver-ner", type=str, help="The name of the task to train")
     parser.add_argument("--model_dir", default="./model", type=str, help="Path to save, load model")
     parser.add_argument("--data_dir", default="./data", type=str, help="The input data dir")
-    parser.add_argument("--train_file", default="ratings_train.txt", type=str, help="Train file")
-    parser.add_argument("--test_file", default="ratings_test.txt", type=str, help="Test file")
+    parser.add_argument("--train_file", default="train.pkl", type=str, help="Train file")
+    parser.add_argument("--test_file", default="test.pkl", type=str, help="Test file")
 
-    parser.add_argument("--model_type", default="distilkobert", type=str, help="Model type selected in the list: " + ", ".join(MODEL_CLASSES.keys()))
+    parser.add_argument("--model_type", default="kobert", type=str, help="Model type selected in the list: " + ", ".join(MODEL_CLASSES.keys()))
 
     parser.add_argument('--seed', type=int, default=42, help="random seed for initialization")
     parser.add_argument("--batch_size", default=32, type=int, help="Batch size for training and evaluation.")
@@ -54,7 +61,8 @@ if __name__ == '__main__':
     parser.add_argument("--do_lower_case", action="store_true", help="Whether to lowercase the text (For uncased model)")
     parser.add_argument("--no_cuda", action="store_true", help="Avoid using CUDA when available")
 
-    parser.add_argument("--ignore_index", default=-100, type=int, help='Specifies a target value that is ignored and does not contribute to the input gradient')
+    parser.add_argument("--ignore_index", default=-100, type=int,
+                        help='Specifies a target value that is ignored and does not contribute to the input gradient')
 
     args = parser.parse_args()
 
