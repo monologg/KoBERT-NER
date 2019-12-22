@@ -151,7 +151,7 @@ class Trainer(object):
             # Slot prediction
             if preds is None:
                 preds = logits.detach().cpu().numpy()
-                out_slot_labels_ids = inputs["labels"].detach().cpu().numpy()
+                out_labels_ids = inputs["labels"].detach().cpu().numpy()
             else:
                 preds = np.append(preds, logits.detach().cpu().numpy(), axis=0)
                 out_label_ids = np.append(out_label_ids, inputs["labels"].detach().cpu().numpy(), axis=0)
