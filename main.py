@@ -36,6 +36,7 @@ if __name__ == '__main__':
     parser.add_argument("--data_dir", default="./data", type=str, help="The input data dir")
     parser.add_argument("--train_file", default="train.pkl", type=str, help="Train file")
     parser.add_argument("--test_file", default="test.pkl", type=str, help="Test file")
+    parser.add_argument("--label_file", default="label.txt", type=str, help="Slot Label file")
 
     parser.add_argument("--model_type", default="kobert", type=str, help="Model type selected in the list: " + ", ".join(MODEL_CLASSES.keys()))
 
@@ -58,7 +59,6 @@ if __name__ == '__main__':
 
     parser.add_argument("--do_train", action="store_true", help="Whether to run training.")
     parser.add_argument("--do_eval", action="store_true", help="Whether to run eval on the test set.")
-    parser.add_argument("--do_lower_case", action="store_true", help="Whether to lowercase the text (For uncased model)")
     parser.add_argument("--no_cuda", action="store_true", help="Avoid using CUDA when available")
 
     parser.add_argument("--ignore_index", default=-100, type=int,

@@ -7,7 +7,7 @@ import torch
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
 from transformers import AdamW, get_linear_schedule_with_warmup
 
-from utils import set_seed, compute_metrics, get_label, MODEL_CLASSES
+from utils import set_seed, compute_metrics, get_labels, MODEL_CLASSES
 
 logger = logging.getLogger(__name__)
 
@@ -19,8 +19,10 @@ class Trainer(object):
         self.dev_dataset = dev_dataset
         self.test_dataset = test_dataset
 
-        self.label_lst = get_label(args)
+        self.label_lst = get_labels(args)
         self.num_labels = len(self.label_lst)
+        # Use cross entropy ignore index as padding label id so that only real label ids contribute to the loss later
+        self.pad_token_label_id = args.ignore_index
 
         self.config_class, self.model_class, _ = MODEL_CLASSES[args.model_type]
 
@@ -146,21 +148,32 @@ class Trainer(object):
                 eval_loss += tmp_eval_loss.mean().item()
             nb_eval_steps += 1
 
+            # Slot prediction
             if preds is None:
                 preds = logits.detach().cpu().numpy()
-                out_label_ids = inputs['labels'].detach().cpu().numpy()
+                out_slot_labels_ids = inputs["labels"].detach().cpu().numpy()
             else:
                 preds = np.append(preds, logits.detach().cpu().numpy(), axis=0)
-                out_label_ids = np.append(
-                    out_label_ids, inputs['labels'].detach().cpu().numpy(), axis=0)
+                out_label_ids = np.append(out_label_ids, inputs["labels"].detach().cpu().numpy(), axis=0)
 
         eval_loss = eval_loss / nb_eval_steps
         results = {
             "loss": eval_loss
         }
 
-        preds = np.argmax(preds, axis=1)
-        result = compute_metrics(preds, out_label_ids)
+        # Slot result
+        preds = np.argmax(preds, axis=2)
+        slot_label_map = {i: label for i, label in enumerate(self.label_lst)}
+        out_label_list = [[] for _ in range(out_label_ids.shape[0])]
+        preds_list = [[] for _ in range(out_label_ids.shape[0])]
+
+        for i in range(out_label_ids.shape[0]):
+            for j in range(out_label_ids.shape[1]):
+                if out_label_ids[i, j] != self.pad_token_label_id:
+                    out_label_list[i].append(slot_label_map[out_label_ids[i][j]])
+                    preds_list[i].append(slot_label_map[preds[i][j]])
+
+        result = compute_metrics(out_label_list, preds_list)
         results.update(result)
 
         logger.info("***** Eval results *****")

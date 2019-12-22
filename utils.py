@@ -4,7 +4,7 @@ import logging
 
 import torch
 import numpy as np
-from sklearn.metrics import f1_score
+from seqeval.metrics import precision_score, recall_score, f1_score
 
 from transformers import BertConfig, DistilBertConfig, BertTokenizer
 from tokenization_kobert import KoBertTokenizer
@@ -24,8 +24,8 @@ MODEL_PATH_MAP = {
 }
 
 
-def get_label(args):
-    return [0, 1]
+def get_labels(args):
+    return [label.strip() for label in open(os.path.join(args.data_dir, args.label_file), 'r', encoding='utf-8')]
 
 
 def load_tokenizer(args):
@@ -48,17 +48,12 @@ def set_seed(args):
 
 def compute_metrics(preds, labels):
     assert len(preds) == len(labels)
-    return acc_and_f1(preds, labels)
+    return f1_pre_rec(preds, labels)
 
 
-def simple_accuracy(preds, labels):
-    return (preds == labels).mean()
-
-
-def acc_and_f1(preds, labels, average='macro'):
-    acc = simple_accuracy(preds, labels)
-    f1 = f1_score(y_true=labels, y_pred=preds, average=average)
+def f1_pre_rec(preds, labels):
     return {
-        "acc": acc,
-        "f1": f1,
+        "precision": precision_score(labels, preds),
+        "recall": recall_score(labels, preds),
+        "f1": f1_score(labels, preds)
     }
