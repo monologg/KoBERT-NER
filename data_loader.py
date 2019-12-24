@@ -2,7 +2,6 @@ import os
 import copy
 import json
 import logging
-import pickle
 
 import torch
 from torch.utils.data import TensorDataset
@@ -71,15 +70,20 @@ class NaverNerProcessor(object):
 
     @classmethod
     def _read_file(cls, input_file):
-        """Read pickle file, and return words and label as list"""
-        with open(input_file, 'rb') as f:
-            return pickle.load(f)
+        """Read tsv file, and return words and label as list"""
+        with open(input_file, "r", encoding="utf-8") as f:
+            lines = []
+            for line in f:
+                lines.append(line.strip())
+            return lines
 
     def _create_examples(self, dataset, set_type):
         """Creates examples for the training and dev sets."""
         examples = []
         for (i, data) in enumerate(dataset):
-            words, labels = data
+            words, labels = data.split('\t')
+            words = words.split()
+            labels = labels.split()
             guid = "%s-%s" % (set_type, i)
 
             labels_idx = []
