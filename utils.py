@@ -14,13 +14,15 @@ from model import BertClassifier, DistilBertClassifier
 MODEL_CLASSES = {
     'kobert': (BertConfig, BertClassifier, KoBertTokenizer),
     'distilkobert': (DistilBertConfig, DistilBertClassifier, KoBertTokenizer),
-    'bert': (BertConfig, BertClassifier, BertTokenizer)
+    'bert': (BertConfig, BertClassifier, BertTokenizer),
+    'kobert-lm': (BertConfig, BertClassifier, KoBertTokenizer)
 }
 
 MODEL_PATH_MAP = {
     'kobert': 'monologg/kobert',
     'distilkobert': 'monologg/distilkobert',
-    'bert': 'bert-base-multilingual-cased'
+    'bert': 'bert-base-multilingual-cased',
+    'kobert-lm': 'monologg/kobert-lm'
 }
 
 
