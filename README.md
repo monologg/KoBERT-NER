@@ -41,7 +41,7 @@ $ python3 main.py --model_type kobert --do_train --do_eval
 |                   | Slot F1 (%) |
 | ----------------- | ----------- |
 | KoBERT            | 84.23       |
-| DistilKoBERT      | 81.33       |
+| DistilKoBERT      | 82.14       |
 | Bert-Multilingual | 81.78       |
 | BiLSTM-CRF        | 76.45       |
 
