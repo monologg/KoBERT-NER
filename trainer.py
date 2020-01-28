@@ -96,7 +96,7 @@ class Trainer(object):
                     global_step += 1
 
                     if self.args.logging_steps > 0 and global_step % self.args.logging_steps == 0:
-                        self.evaluate("test")  # Only test set available for NSMC
+                        self.evaluate("test")
 
                     if self.args.save_steps > 0 and global_step % self.args.save_steps == 0:
                         self.save_model()
@@ -112,7 +112,6 @@ class Trainer(object):
         return global_step, tr_loss / global_step
 
     def evaluate(self, mode):
-        # We use test dataset because semeval doesn't have dev dataset
         if mode == 'test':
             dataset = self.test_dataset
         elif mode == 'dev':
