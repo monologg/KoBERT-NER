@@ -48,12 +48,12 @@ def set_seed(args):
         torch.cuda.manual_seed_all(args.seed)
 
 
-def compute_metrics(preds, labels):
+def compute_metrics(labels, preds):
     assert len(preds) == len(labels)
-    return f1_pre_rec(preds, labels)
+    return f1_pre_rec(labels, preds)
 
 
-def f1_pre_rec(preds, labels):
+def f1_pre_rec(labels, preds):
     return {
         "precision": precision_score(labels, preds),
         "recall": recall_score(labels, preds),
