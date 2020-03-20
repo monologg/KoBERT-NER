@@ -36,6 +36,8 @@ tokenizer = KoBertTokenizer.from_pretrained('monologg/kobert')
 $ python3 main.py --model_type kobert --do_train --do_eval
 ```
 
+- `--write_pred` 옵션을 주면 **evaluation의 prediction 결과**가 `preds` 폴더에  저장됩니다.
+
 ## Results
 
 |                   | Slot F1 (%) |

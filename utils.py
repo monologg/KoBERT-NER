@@ -26,6 +26,17 @@ MODEL_PATH_MAP = {
 }
 
 
+def get_test_texts(args):
+    texts = []
+    with open(os.path.join(args.data_dir, args.test_file), 'r', encoding='utf-8') as f:
+        for line in f:
+            text, _ = line.split('\t')
+            text = text.split()
+            texts.append(text)
+
+    return texts
+
+
 def get_labels(args):
     return [label.strip() for label in open(os.path.join(args.data_dir, args.label_file), 'r', encoding='utf-8')]
 
