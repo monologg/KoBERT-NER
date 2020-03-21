@@ -8,7 +8,7 @@ import torch
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
 from transformers import AdamW, get_linear_schedule_with_warmup
 
-from utils import set_seed, compute_metrics, get_labels, get_test_texts, MODEL_CLASSES
+from utils import set_seed, compute_metrics, get_labels, get_test_texts, show_report, MODEL_CLASSES
 
 logger = logging.getLogger(__name__)
 
@@ -196,6 +196,7 @@ class Trainer(object):
         logger.info("***** Eval results *****")
         for key in sorted(results.keys()):
             logger.info("  %s = %s", key, str(results[key]))
+        logger.info("\n" + show_report(out_label_list, preds_list))  # Get the report for each tag result
 
         return results
 
