@@ -36,16 +36,16 @@ tokenizer = KoBertTokenizer.from_pretrained('monologg/kobert')
 $ python3 main.py --model_type kobert --do_train --do_eval
 ```
 
-- `--write_pred` 옵션을 주면 **evaluation의 prediction 결과**가 `preds` 폴더에  저장됩니다.
+- `--write_pred` 옵션을 주면 **evaluation의 prediction 결과**가 `preds` 폴더에 저장됩니다.
 
 ## Results
 
-|                   | Slot F1 (%) |
-| ----------------- | ----------- |
-| KoBERT            | 84.23       |
-| DistilKoBERT      | 82.14       |
-| Bert-Multilingual | 81.78       |
-| BiLSTM-CRF        | 76.45       |
+|                                                                  | Slot F1 (%) |
+| ---------------------------------------------------------------- | ----------- |
+| KoBERT                                                           | 86.11       |
+| DistilKoBERT                                                     | 84.13       |
+| Bert-Multilingual                                                | 84.20       |
+| [CNN-BiLSTM-CRF](https://github.com/monologg/korean-ner-pytorch) | 74.57       |
 
 ## References
 
