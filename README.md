@@ -1,12 +1,12 @@
 # KoBERT-NER
 
 - KoBERT를 이용한 한국어 Named Entity Recognition Task
-- `Huggingface Tranformers` 라이브러리를 이용하여 구현
+- 🤗`Huggingface Tranformers`🤗 라이브러리를 이용하여 구현
 
 ## Dependencies
 
-- torch>=1.1.0
-- transformers>=2.2.2
+- torch==1.4.0
+- transformers==2.7.0
 - seqeval>=0.0.12
 - sentencepiece>=0.1.82
 
@@ -38,6 +38,11 @@ $ python3 main.py --model_type kobert --do_train --do_eval
 
 - `--write_pred` 옵션을 주면 **evaluation의 prediction 결과**가 `preds` 폴더에 저장됩니다.
 
+## Prediction
+
+```bash
+$ python3 predict.py --input_file {INPUT_FILE_PATH} --output_file {OUTPUT_FILE_PATH} --model_dir {SAVED_CKPT_PATH}
+
 ## Results
 
 |                                                                  | Slot F1 (%) |
@@ -53,3 +58,4 @@ $ python3 main.py --model_type kobert --do_train --do_eval
 - [Huggingface Transformers](https://github.com/huggingface/transformers)
 - [NLP Implementation by aisolab](https://github.com/aisolab/nlp_implementation)
 - [BERT NER by eagle705](https://github.com/eagle705/pytorch-bert-crf-ner)
+```

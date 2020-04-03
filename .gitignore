@@ -131,3 +131,6 @@ model/
 .DS_Store
 
 preds/
+
+sample_pred_out.txt
+cached*

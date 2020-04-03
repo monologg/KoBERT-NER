@@ -6,16 +6,14 @@ import torch
 import numpy as np
 from seqeval.metrics import precision_score, recall_score, f1_score, classification_report
 
-from transformers import BertConfig, DistilBertConfig, BertTokenizer
+from transformers import BertConfig, DistilBertConfig, BertTokenizer, BertForTokenClassification, DistilBertForTokenClassification
 from tokenization_kobert import KoBertTokenizer
 
-from model import BertClassifier, DistilBertClassifier
-
 MODEL_CLASSES = {
-    'kobert': (BertConfig, BertClassifier, KoBertTokenizer),
-    'distilkobert': (DistilBertConfig, DistilBertClassifier, KoBertTokenizer),
-    'bert': (BertConfig, BertClassifier, BertTokenizer),
-    'kobert-lm': (BertConfig, BertClassifier, KoBertTokenizer)
+    'kobert': (BertConfig, BertForTokenClassification, KoBertTokenizer),
+    'distilkobert': (DistilBertConfig, DistilBertForTokenClassification, KoBertTokenizer),
+    'bert': (BertConfig, BertForTokenClassification, BertTokenizer),
+    'kobert-lm': (BertConfig, BertForTokenClassification, KoBertTokenizer)
 }
 
 MODEL_PATH_MAP = {
