@@ -128,6 +128,7 @@ def convert_examples_to_features(examples, max_seq_len, tokenizer,
     # Setting based on the current model type
     cls_token = tokenizer.cls_token
     sep_token = tokenizer.sep_token
+    unk_token = tokenizer.unk_token
     pad_token_id = tokenizer.pad_token_id
 
     features = []
@@ -140,11 +141,11 @@ def convert_examples_to_features(examples, max_seq_len, tokenizer,
         label_ids = []
         for word, slot_label in zip(example.words, example.labels):
             word_tokens = tokenizer.tokenize(word)
-            # bert-base-multilingual-cased sometimes output "nothing ([]) when calling tokenize with just a space.
-            if len(word_tokens) > 0:
-                tokens.extend(word_tokens)
-                # Use the real label id for the first token of the word, and padding ids for the remaining tokens
-                label_ids.extend([int(slot_label)] + [pad_token_label_id] * (len(word_tokens) - 1))
+            if not word_tokens:
+                word_tokens = [unk_token]  # For handling the bad-encoded word
+            tokens.extend(word_tokens)
+            # Use the real label id for the first token of the word, and padding ids for the remaining tokens
+            label_ids.extend([int(slot_label)] + [pad_token_label_id] * (len(word_tokens) - 1))
 
         # Account for [CLS] and [SEP]
         special_tokens_count = 2
