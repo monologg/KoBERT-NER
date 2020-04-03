@@ -42,6 +42,7 @@ $ python3 main.py --model_type kobert --do_train --do_eval
 
 ```bash
 $ python3 predict.py --input_file {INPUT_FILE_PATH} --output_file {OUTPUT_FILE_PATH} --model_dir {SAVED_CKPT_PATH}
+```
 
 ## Results
 
@@ -58,4 +59,3 @@ $ python3 predict.py --input_file {INPUT_FILE_PATH} --output_file {OUTPUT_FILE_P
 - [Huggingface Transformers](https://github.com/huggingface/transformers)
 - [NLP Implementation by aisolab](https://github.com/aisolab/nlp_implementation)
 - [BERT NER by eagle705](https://github.com/eagle705/pytorch-bert-crf-ner)
-```
