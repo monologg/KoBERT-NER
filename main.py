@@ -41,13 +41,13 @@ if __name__ == '__main__':
     parser.add_argument("--label_file", default="label.txt", type=str, help="Slot Label file")
     parser.add_argument("--write_pred", action="store_true", help="Write prediction during evaluation")
 
-    parser.add_argument("--model_type", default="koelectra-small", type=str, help="Model type selected in the list: " + ", ".join(MODEL_CLASSES.keys()))
+    parser.add_argument("--model_type", default="koelectra-base", type=str, help="Model type selected in the list: " + ", ".join(MODEL_CLASSES.keys()))
 
     parser.add_argument('--seed', type=int, default=42, help="random seed for initialization")
-    parser.add_argument("--train_batch_size", default=64, type=int, help="Batch size for training.")
-    parser.add_argument("--eval_batch_size", default=128, type=int, help="Batch size for evaluation.")
+    parser.add_argument("--train_batch_size", default=32, type=int, help="Batch size for training.")
+    parser.add_argument("--eval_batch_size", default=64, type=int, help="Batch size for evaluation.")
     parser.add_argument("--max_seq_len", default=50, type=int, help="The maximum total input sequence length after tokenization.")
-    parser.add_argument("--learning_rate", default=5e-5, type=float, help="The initial learning rate for Adam.")
+    parser.add_argument("--learning_rate", default=1e-4, type=float, help="The initial learning rate for Adam.")
     parser.add_argument("--num_train_epochs", default=20.0, type=float, help="Total number of training epochs to perform.")
     parser.add_argument("--weight_decay", default=0.0, type=float, help="Weight decay if we apply some.")
     parser.add_argument('--gradient_accumulation_steps', type=int, default=1,

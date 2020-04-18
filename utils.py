@@ -9,6 +9,7 @@ from seqeval.metrics import precision_score, recall_score, f1_score, classificat
 from transformers import BertConfig, DistilBertConfig, BertTokenizer, BertForTokenClassification, DistilBertForTokenClassification
 from transformers import ElectraConfig, ElectraForTokenClassification, ElectraTokenizer
 from tokenization_kobert import KoBertTokenizer
+from tokenization_kocharelectra import KoCharElectraTokenizer
 
 MODEL_CLASSES = {
     'kobert': (BertConfig, BertForTokenClassification, KoBertTokenizer),
@@ -16,7 +17,8 @@ MODEL_CLASSES = {
     'bert': (BertConfig, BertForTokenClassification, BertTokenizer),
     'kobert-lm': (BertConfig, BertForTokenClassification, KoBertTokenizer),
     'koelectra-small': (ElectraConfig, ElectraForTokenClassification, ElectraTokenizer),
-    'koelectra-base': (ElectraConfig, ElectraForTokenClassification, ElectraTokenizer)
+    'koelectra-base': (ElectraConfig, ElectraForTokenClassification, ElectraTokenizer),
+    'kocharelectra-small': (ElectraConfig, ElectraForTokenClassification, KoCharElectraTokenizer),
 }
 
 MODEL_PATH_MAP = {
@@ -25,7 +27,8 @@ MODEL_PATH_MAP = {
     'bert': 'bert-base-multilingual-cased',
     'kobert-lm': 'monologg/kobert-lm',
     'koelectra-small': 'monologg/koelectra-small-discriminator',
-    'koelectra-base': 'monologg/koelectra-base-discriminator'
+    'koelectra-base': 'monologg/koelectra-base-discriminator',
+    'kocharelectra-small': 'monologg/kocharelectra-small-discriminator'
 }
 
 
