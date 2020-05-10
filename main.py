@@ -1,12 +1,14 @@
 import argparse
 
 from trainer import Trainer
-from utils import init_logger, load_tokenizer, MODEL_CLASSES, MODEL_PATH_MAP
+from utils import init_logger, load_tokenizer, set_seed, MODEL_CLASSES, MODEL_PATH_MAP
 from data_loader import load_and_cache_examples
 
 
 def main(args):
     init_logger()
+    set_seed(args)
+    
     tokenizer = load_tokenizer(args)
 
     train_dataset = None

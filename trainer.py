@@ -8,7 +8,7 @@ import torch
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
 from transformers import AdamW, get_linear_schedule_with_warmup
 
-from utils import set_seed, compute_metrics, get_labels, get_test_texts, show_report, MODEL_CLASSES
+from utils import compute_metrics, get_labels, get_test_texts, show_report, MODEL_CLASSES
 
 logger = logging.getLogger(__name__)
 
@@ -80,7 +80,6 @@ class Trainer(object):
         self.model.zero_grad()
 
         train_iterator = trange(int(self.args.num_train_epochs), desc="Epoch")
-        set_seed(self.args)
 
         for _ in train_iterator:
             epoch_iterator = tqdm(train_dataloader, desc="Iteration")
