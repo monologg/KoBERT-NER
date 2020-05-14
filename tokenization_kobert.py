@@ -59,7 +59,6 @@ SPIECE_UNDERLINE = u'▁'
 class KoBertTokenizer(PreTrainedTokenizer):
     """
         SentencePiece based tokenizer. Peculiarities:
-
             - requires `SentencePiece <https://github.com/google/sentencepiece>`_
     """
     vocab_files_names = VOCAB_FILES_NAMES
@@ -98,9 +97,6 @@ class KoBertTokenizer(PreTrainedTokenizer):
                 self.token2idx[token] = idx
                 self.idx2token.append(token)
 
-        self.max_len_single_sentence = self.max_len - 2  # take into account special tokens
-        self.max_len_sentences_pair = self.max_len - 3  # take into account special tokens
-
         try:
             import sentencepiece as spm
         except ImportError:
@@ -119,6 +115,9 @@ class KoBertTokenizer(PreTrainedTokenizer):
     @property
     def vocab_size(self):
         return len(self.idx2token)
+
+    def get_vocab(self):
+        return dict(self.token2idx, **self.added_tokens_encoder)
 
     def __getstate__(self):
         state = self.__dict__.copy()
@@ -191,7 +190,7 @@ class KoBertTokenizer(PreTrainedTokenizer):
         """
         Build model inputs from a sequence or a pair of sequence for sequence classification tasks
         by concatenating and adding special tokens.
-        A RoBERTa sequence has the following format:
+        A KoBERT sequence has the following format:
             single sequence: [CLS] X [SEP]
             pair of sequences: [CLS] A [SEP] B [SEP]
         """
@@ -205,14 +204,12 @@ class KoBertTokenizer(PreTrainedTokenizer):
         """
         Retrieves sequence ids from a token list that has no special tokens added. This method is called when adding
         special tokens using the tokenizer ``prepare_for_model`` or ``encode_plus`` methods.
-
         Args:
             token_ids_0: list of ids (must not contain special tokens)
             token_ids_1: Optional list of ids (must not contain special tokens), necessary when fetching sequence ids
                 for sequence pairs
             already_has_special_tokens: (default False) Set to True if the token list is already formated with
                 special tokens for the model
-
         Returns:
             A list of integers in the range [0, 1]: 0 for a special token, 1 for a sequence token.
         """
@@ -232,10 +229,9 @@ class KoBertTokenizer(PreTrainedTokenizer):
     def create_token_type_ids_from_sequences(self, token_ids_0, token_ids_1=None):
         """
         Creates a mask from the two sequences passed to be used in a sequence-pair classification task.
-        A BERT sequence pair mask has the following format:
+        A KoBERT sequence pair mask has the following format:
         0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1
         | first sequence    | second sequence
-
         if token_ids_1 is None, only returns the first portion of the mask (0's).
         """
         sep = [self.sep_token_id]

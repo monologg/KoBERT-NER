@@ -6,9 +6,8 @@
 ## Dependencies
 
 - torch==1.4.0
-- transformers==2.7.0
+- transformers==2.9.1
 - seqeval>=0.0.12
-- sentencepiece>=0.1.82
 
 ## Dataset
 
