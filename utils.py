@@ -6,21 +6,34 @@ import torch
 import numpy as np
 from seqeval.metrics import precision_score, recall_score, f1_score, classification_report
 
-from transformers import BertConfig, DistilBertConfig, BertTokenizer, BertForTokenClassification, DistilBertForTokenClassification
+from transformers import (
+    BertConfig,
+    DistilBertConfig,
+    ElectraConfig,
+    ElectraTokenizer,
+    BertTokenizer,
+    BertForTokenClassification,
+    DistilBertForTokenClassification,
+    ElectraForTokenClassification
+)
 from tokenization_kobert import KoBertTokenizer
 
 MODEL_CLASSES = {
     'kobert': (BertConfig, BertForTokenClassification, KoBertTokenizer),
     'distilkobert': (DistilBertConfig, DistilBertForTokenClassification, KoBertTokenizer),
     'bert': (BertConfig, BertForTokenClassification, BertTokenizer),
-    'kobert-lm': (BertConfig, BertForTokenClassification, KoBertTokenizer)
+    'kobert-lm': (BertConfig, BertForTokenClassification, KoBertTokenizer),
+    'koelectra-base': (ElectraConfig, ElectraForTokenClassification, ElectraTokenizer),
+    'koelectra-small': (ElectraConfig, ElectraForTokenClassification, ElectraTokenizer),
 }
 
 MODEL_PATH_MAP = {
     'kobert': 'monologg/kobert',
     'distilkobert': 'monologg/distilkobert',
     'bert': 'bert-base-multilingual-cased',
-    'kobert-lm': 'monologg/kobert-lm'
+    'kobert-lm': 'monologg/kobert-lm',
+    'koelectra-base': 'monologg/koelectra-base-discriminator',
+    'koelectra-small': 'monologg/koelectra-small-discriminator',
 }
 
 

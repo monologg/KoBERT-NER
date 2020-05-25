@@ -6,7 +6,7 @@
 ## Dependencies
 
 - torch==1.4.0
-- transformers==2.9.1
+- transformers==2.10.0
 - seqeval>=0.0.12
 
 ## Dataset
